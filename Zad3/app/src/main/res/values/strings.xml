@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Zad3</string>
+    <string name="ConstraintLayoutButton">Constraint Layout Button</string>
+    <string name="FrameLayoutButton">Frame Layout Button</string>
+    <string name="MainPageButton">Strona główna</string>
+    <string-array name="List">
+        <item>Tekscik</item>
+        <item>TEKSCIK</item>
+    </string-array>
+</resources>

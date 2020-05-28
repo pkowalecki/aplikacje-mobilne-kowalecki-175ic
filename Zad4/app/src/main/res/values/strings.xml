@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Jedzonko</string>
+    <string name="foodLogo">Logo aplikacji</string>
+    <string-array name="options">
+        <item>Jedzenie</item>
+        <item>Info</item>
+    </string-array>
+
+    <string name="opis">
+        Aplikacja stworzona w celach laboratorynych.
+        Lab4 175IC_A1
+    </string>
+
+    <string name="label_main">Lab4 Android</string>
+    <string name="label_info">Informacje</string>
+    <string name="label_category">Wybierz jedzonko</string>
+    <string name="label_food">Wybrane danie</string>
+    <string name="create_order">Create Order</string>
+    <string name="create_order_title">Create Order</string>
+    <string name="action_share">Share</string>
+    <string name ="order_food">Order</string>
+    <string name = "favorites">Twoje ulubione danie</string>
+    <string name="favorite">Ulubione</string>
+
+</resources>

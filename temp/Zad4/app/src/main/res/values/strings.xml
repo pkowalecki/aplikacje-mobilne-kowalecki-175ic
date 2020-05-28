@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Jedzonko</string>
+    <string name="LabelInfo">Informacje</string>
+    <string name="foodLogo">Logo aplikacji</string>
+    <string-array name="options">
+        <item>Jedzenie1</item>
+        <item>Jedzenie2</item>
+        <item>Jedzenie3</item>
+    </string-array>
+
+</resources>

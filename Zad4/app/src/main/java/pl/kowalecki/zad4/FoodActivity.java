@@ -1,10 +1,12 @@
 package pl.kowalecki.zad4;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -33,8 +35,9 @@ public class FoodActivity extends AppCompatActivity {
 
 
         int foodNo = (Integer) getIntent().getExtras().get(EXTRA_FOODNO);
+        SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
         try{
-            SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
+
             SQLiteDatabase db = foodDatabaseHelper.getWritableDatabase();
             Cursor cursor = db.query("FOOD", new String[] {"NAME", "DESCRIPTION","IMAGE_RESOURCE_ID", "FAVORITE"},
                     "_id = ?", new String[] {Integer.toString(foodNo)}, null, null, null);
@@ -68,20 +71,49 @@ public class FoodActivity extends AppCompatActivity {
 
     public void onFavoriteClicked(View view){
         int foodNo = (Integer) getIntent().getExtras().get(EXTRA_FOODNO);
-        CheckBox favorite = (CheckBox)findViewById(R.id.favorite);
+        new UpdateFoodTask().execute(foodNo);
 
-        ContentValues foodValues = new ContentValues();
+//        CheckBox favorite = (CheckBox)findViewById(R.id.favorite);
+//        ContentValues foodValues = new ContentValues();
+//        foodValues.put("FAVORITE", favorite.isChecked());
+//        SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(FoodActivity.this);
+//        try{
+//            SQLiteDatabase db = foodDatabaseHelper.getWritableDatabase();
+//            db.update("FOOD", foodValues, "_id = ?", new String[] {Integer.toString(foodNo)});
+//            db.close();
+//        }catch (SQLiteException e){
+//            Toast toast = Toast.makeText(this, "Baza danych jest niedostepna", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+    }
 
-        foodValues.put("FAVORITE", favorite.isChecked());
+    private class UpdateFoodTask extends AsyncTask<Integer, Void, Boolean>{
+    private ContentValues foodValues;
 
-        SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(FoodActivity.this);
+        protected void onPreExecute(){
+            CheckBox favorite = (CheckBox)findViewById(R.id.favorite);
+            ContentValues foodValues = new ContentValues();
+            foodValues.put("FAVORITE", favorite.isChecked());
+        }
+
+        protected Boolean doInBackground(Integer... foodArray) {
+            int foodNo = foodArray[0];
+            SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(FoodActivity.this);
         try{
             SQLiteDatabase db = foodDatabaseHelper.getWritableDatabase();
             db.update("FOOD", foodValues, "_id = ?", new String[] {Integer.toString(foodNo)});
             db.close();
+            return true;
         }catch (SQLiteException e){
-            Toast toast = Toast.makeText(this, "Baza danych jest niedostepna", Toast.LENGTH_SHORT);
+            return false;
+        }
+     }
+
+        protected void onPostExecute(Boolean success){
+            if(!success){
+            Toast toast = Toast.makeText(FoodActivity.this, "Baza danych jest niedostepna", Toast.LENGTH_SHORT);
             toast.show();
+            }
         }
     }
 }

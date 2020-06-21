@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Zad8</string>
+    <string name="button_response">Już czas!</string>
+    <string name ="button_text">Klik</string>
+</resources>

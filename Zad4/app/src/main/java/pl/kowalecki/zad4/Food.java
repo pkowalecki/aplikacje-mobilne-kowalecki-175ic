@@ -6,7 +6,7 @@ public class Food {
     private String description;
     private int imageResourceId;
 
-    public static final Food[] foodArray = {
+    public static final Food[] foods = {
             new Food("Scrambled eggs", "Jajecznica na maśle", R.drawable.scrambled_eggs),
             new Food("Chicken butter", "Kawałki kurczaka w sosie masala", R.drawable.chicken_butter),
             new Food("Mushroom  soup", "Zupa z pieczarek", R.drawable.mushroom_soup) //R.drawable -> obrazki

@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "fooddb";
-    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "zad4";
+    private static final int DB_VERSION = 2;
 
-    public FoodDatabaseHelper(Context context) {
+    FoodDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -28,8 +28,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE FOOD (_id INTEGER PRIMARY KEY AUTOINCREMENT, "+ "NAME TEXT,"+ "DESCRIPTION TEXT," + "IMAGE_RESOURCE_ID INTEGER);");
             insertFood(db,"Scrambled eggs", "Jajecznica na maśle", R.drawable.scrambled_eggs);
             insertFood(db,"Chicken butter", "Kawałki kurczaka w sosie masala", R.drawable.chicken_butter);
-            insertFood(db,"Mushroom  soup", "Zupa z pieczarek", R.drawable.mushroom_soup);
+
         }
+        insertFood(db,"Mushroom  soup", "Zupa z pieczarek", R.drawable.mushroom_soup);
         if (oldVersion < 2){
             db.execSQL("ALTER TABLE FOOD ADD COLUMN FAVORITE NUMERIC;");
         }

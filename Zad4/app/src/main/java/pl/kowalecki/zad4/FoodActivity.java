@@ -35,12 +35,15 @@ public class FoodActivity extends AppCompatActivity {
 
 
         int foodNo = (Integer) getIntent().getExtras().get(EXTRA_FOODNO);
-        SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
-        try{
 
+        try{
+            SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
             SQLiteDatabase db = foodDatabaseHelper.getWritableDatabase();
-            Cursor cursor = db.query("FOOD", new String[] {"NAME", "DESCRIPTION","IMAGE_RESOURCE_ID", "FAVORITE"},
-                    "_id = ?", new String[] {Integer.toString(foodNo)}, null, null, null);
+            Cursor cursor = db.query("FOOD",
+                    new String[] {"NAME", "DESCRIPTION","IMAGE_RESOURCE_ID", "FAVORITE"},
+                    "_id = ?",
+                    new String[] {Integer.toString(foodNo)},
+                    null, null, null);
             if(cursor.moveToFirst()){
                 String nameText = cursor.getString(0);
                 String descriptionText = cursor.getString(1);
@@ -59,7 +62,7 @@ public class FoodActivity extends AppCompatActivity {
 
                 CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
                 favorite.setChecked(isFavorite);
-            };
+            }
             cursor.close();
             db.close();
         } catch(SQLiteException e){
@@ -70,7 +73,7 @@ public class FoodActivity extends AppCompatActivity {
     }
 
     public void onFavoriteClicked(View view){
-        int foodNo = (Integer) getIntent().getExtras().get(EXTRA_FOODNO);
+        int foodNo = (Integer)getIntent().getExtras().get(EXTRA_FOODNO);
         new UpdateFoodTask().execute(foodNo);
 
 //        CheckBox favorite = (CheckBox)findViewById(R.id.favorite);
@@ -87,17 +90,18 @@ public class FoodActivity extends AppCompatActivity {
 //        }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class UpdateFoodTask extends AsyncTask<Integer, Void, Boolean>{
-    private ContentValues foodValues;
+        ContentValues foodValues;
 
         protected void onPreExecute(){
             CheckBox favorite = (CheckBox)findViewById(R.id.favorite);
-            ContentValues foodValues = new ContentValues();
+            foodValues = new ContentValues();
             foodValues.put("FAVORITE", favorite.isChecked());
         }
 
-        protected Boolean doInBackground(Integer... foodArray) {
-            int foodNo = foodArray[0];
+        protected Boolean doInBackground(Integer... foods) {
+            int foodNo = foods[0];
             SQLiteOpenHelper foodDatabaseHelper = new FoodDatabaseHelper(FoodActivity.this);
         try{
             SQLiteDatabase db = foodDatabaseHelper.getWritableDatabase();
